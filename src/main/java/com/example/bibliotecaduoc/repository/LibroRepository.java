@@ -20,7 +20,7 @@ public class LibroRepository {
         listaLibros.add(new Libro(5, "9780439139601", "Harry Potter y el prisionero de Azkaban", "Scholastic", 1999, "J. K. Rowling"));
         listaLibros.add(new Libro(6, "9780439136365", "Harry Potter y el cáliz de fuego", "Scholastic", 2000, "J. K. Rowling"));
         listaLibros.add(new Libro(7, "9780321127426", "Effective Java", "Addison- Wesley", 2008, "Joshua Bloch"));
-        listaLibros.add(new Libro(8, "9780134685991", "Clean Architecture", "Prentice Hall", 2017, "Robert C. Martin"));
+        listaLibros.add(new Libro(8, "9780134685991", "Clean Architecture", "Prentice Hall", 2018, "Robert C. Martin"));
         listaLibros.add(new Libro(9, "9780201633610", "Design Patterns", "Addison- Wesley", 1994, "Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides"));
         listaLibros.add(new Libro(10, "9780132350884", "Clean Code", "Prentice Hall", 2008, "Robert C. Martin"));
     }
@@ -49,22 +49,24 @@ public class LibroRepository {
         return null;
     }
     //Buscar autor
-    public Libro buscarPorAutor(String autor){
+    public List<Libro> buscarPorAutor(String autor){
+        List<Libro> resultado = new ArrayList<>();
         for (Libro libro : listaLibros){
             if (libro.getAutor().equals(autor)){
-                return libro;
+                resultado.add(libro);
             }
         }
-        return null;
+        return resultado;
     }
     //buscar por año
-    public Libro buscarPorPubli(int publi) {
+    public List<Libro> buscarPorPubli(int publi) {
+        List<Libro> resultado = new ArrayList<>();
         for (Libro libro : listaLibros){
             if (libro.getFechaPublicacion() == publi){
-                return libro;
+                resultado.add(libro);
             }
         }
-        return null;
+        return resultado;
     }
 
     public Libro guardar(Libro lib){

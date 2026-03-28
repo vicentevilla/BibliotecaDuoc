@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 
@@ -57,11 +55,11 @@ public class LibroController {
         return libroService.getLibroIsbn(isbn);
     }
     @GetMapping("/autor/{autor}")
-    public Libro buscaAutor(@PathVariable String autor){
+    public List<Libro> buscaAutor(@PathVariable String autor){
         return libroService.getLibroAutor(autor);
     }
     @GetMapping("/publi/{publi}")
-    public Libro buscaPubli(@PathVariable int publi){
+    public List<Libro> buscaPubli(@PathVariable int publi){
         return libroService.getLibroPubli(publi);
     }
-}
+} 

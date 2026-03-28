@@ -42,10 +42,10 @@ public class LibroService {
     public Libro getLibroIsbn(String isbn){
         return libroRepository.buscarPorIsbn(isbn);
     }
-    public Libro getLibroAutor(String autor){
+    public List<Libro> getLibroAutor(String autor){
         return libroRepository.buscarPorAutor(autor);
     }
-    public Libro getLibroPubli(int publi){
+    public List<Libro> getLibroPubli(int publi){
         return libroRepository.buscarPorPubli(publi);
     }
 }
