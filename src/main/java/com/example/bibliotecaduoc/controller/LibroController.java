@@ -60,5 +60,8 @@ public class LibroController {
     public Libro buscaAutor(@PathVariable String autor){
         return libroService.getLibroAutor(autor);
     }
-    
+    @GetMapping("/publi/{publi}")
+    public Libro buscaPubli(@PathVariable int publi){
+        return libroService.getLibroPubli(publi);
+    }
 }

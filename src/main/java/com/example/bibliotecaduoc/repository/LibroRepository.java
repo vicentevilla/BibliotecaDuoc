@@ -57,6 +57,15 @@ public class LibroRepository {
         }
         return null;
     }
+    //buscar por año
+    public Libro buscarPorPubli(int publi) {
+        for (Libro libro : listaLibros){
+            if (libro.getFechaPublicacion() == publi){
+                return libro;
+            }
+        }
+        return null;
+    }
 
     public Libro guardar(Libro lib){
         listaLibros.add(lib);
