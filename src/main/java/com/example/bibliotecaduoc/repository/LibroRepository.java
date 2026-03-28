@@ -68,6 +68,19 @@ public class LibroRepository {
         }
         return resultado;
     }
+    //Fecha mas antigua
+    public Libro buscarMasAntiguo(){
+        if (listaLibros.isEmpty()){
+            return null;
+        }
+        Libro masAntiguo = listaLibros.get(0);
+        for(Libro libro : listaLibros){
+            if(libro.getFechaPublicacion() < masAntiguo.getFechaPublicacion()){
+                masAntiguo = libro;
+            }
+        }
+        return masAntiguo;
+    }
 
     public Libro guardar(Libro lib){
         listaLibros.add(lib);
