@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+
 
 //ejemplo
 
@@ -44,4 +48,17 @@ public class LibroController {
     public String eliminarLibro(@PathVariable int id){
         return libroService.deleteLibro(id);
     }
+    @GetMapping("/total")
+    public int totaLibrosV2(){
+        return libroService.totaLibrosV2();
+    }
+    @GetMapping("/isbn/{isbn}")
+    public Libro buscaIsbn(@PathVariable String isbn) {
+        return libroService.getLibroIsbn(isbn);
+    }
+    @GetMapping("/autor/{autor}")
+    public Libro buscaAutor(@PathVariable String autor){
+        return libroService.getLibroAutor(autor);
+    }
+    
 }

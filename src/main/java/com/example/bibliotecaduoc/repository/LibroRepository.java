@@ -48,6 +48,15 @@ public class LibroRepository {
         }
         return null;
     }
+    //Buscar autor
+    public Libro buscarPorAutor(String autor){
+        for (Libro libro : listaLibros){
+            if (libro.getAutor().equals(autor)){
+                return libro;
+            }
+        }
+        return null;
+    }
 
     public Libro guardar(Libro lib){
         listaLibros.add(lib);
