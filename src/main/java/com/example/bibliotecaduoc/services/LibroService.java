@@ -48,4 +48,10 @@ public class LibroService {
     public List<Libro> getLibroPubli(int publi){
         return libroRepository.buscarPorPubli(publi);
     }
+    public Libro getLibroOld(){
+        return libroRepository.buscarMasOld();
+    }
+    public Libro getLibroNew(){
+        return libroRepository.buscarMasNew();
+    }
 }

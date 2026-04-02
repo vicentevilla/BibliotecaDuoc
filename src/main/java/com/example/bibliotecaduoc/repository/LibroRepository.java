@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Comparator;
 
 @Repository
 public class LibroRepository {
@@ -68,18 +69,13 @@ public class LibroRepository {
         }
         return resultado;
     }
-    //Fecha mas antigua
-    public Libro buscarMasAntiguo(){
-        if (listaLibros.isEmpty()){
-            return null;
-        }
-        Libro masAntiguo = listaLibros.get(0);
-        for(Libro libro : listaLibros){
-            if(libro.getFechaPublicacion() < masAntiguo.getFechaPublicacion()){
-                masAntiguo = libro;
-            }
-        }
-        return masAntiguo;
+    //Fecha mas antiguo
+    public Libro buscarMasOld(){
+        return listaLibros.stream().min(Comparator.comparing(Libro:: getFechaPublicacion)).orElse(null); 
+    }
+    //buscar mas nuevo
+    public Libro buscarMasNew(){
+        return listaLibros.stream().max(Comparator.comparing(Libro::getFechaPublicacion)).orElse(null);
     }
 
     public Libro guardar(Libro lib){

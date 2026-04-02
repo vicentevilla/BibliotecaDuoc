@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 
 
@@ -62,4 +64,13 @@ public class LibroController {
     public List<Libro> buscaPubli(@PathVariable int publi){
         return libroService.getLibroPubli(publi);
     }
+    @GetMapping("/old")
+    public Libro getLibroOld(){
+        return libroService.getLibroOld();
+    }
+    @GetMapping("/new")
+    public Libro getLibroNew(){
+        return libroService.getLibroNew();
+    } 
 } 
+//https://github.com/vicentevilla/BibliotecaDuoc.git
