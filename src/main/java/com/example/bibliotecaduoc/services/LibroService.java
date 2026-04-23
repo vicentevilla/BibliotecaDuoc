@@ -2,56 +2,32 @@ package com.example.bibliotecaduoc.services;
 
 import com.example.bibliotecaduoc.model.Libro;
 import com.example.bibliotecaduoc.repository.LibroRepository;
+
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
+@Transactional
 public class LibroService {
     @Autowired
     private LibroRepository libroRepository;
 
-    public List<Libro> getLibros(){
-        return libroRepository.obtenerLibros();
+    public List<Libro> finAll(){
+        return libroRepository.findAll();
     }
 
-    public Libro saveLibro(Libro libro){
-        return libroRepository.guardar(libro);
+    public Libro findById(long id){
+        return libroRepository.findById(id).get();
     }
 
-    public Libro getLibroId(int id){
-        return libroRepository.buscarPorId(id);
+    public Libro save(Libro libro){
+        return libroRepository.save(libro);
     }
 
-    public Libro updateLibro(Libro libro){
-        return libroRepository.actualizar(libro);
-    }
-
-    public String deleteLibro(int id){
-        libroRepository.eliminar(id);
-        return "Producto eliminado";
-    }
-
-    public int totaLibros(){
-        return libroRepository.obtenerLibros().size();
-    }
-
-    public int totaLibrosV2(){
-        return libroRepository.totaLibros();
-    }
-    public Libro getLibroIsbn(String isbn){
-        return libroRepository.buscarPorIsbn(isbn);
-    }
-    public List<Libro> getLibroAutor(String autor){
-        return libroRepository.buscarPorAutor(autor);
-    }
-    public List<Libro> getLibroPubli(int publi){
-        return libroRepository.buscarPorPubli(publi);
-    }
-    public Libro getLibroOld(){
-        return libroRepository.buscarMasOld();
-    }
-    public Libro getLibroNew(){
-        return libroRepository.buscarMasNew();
+    public void delete(Long id){
+        libroRepository.deleteById(id);
     }
 }

@@ -1,20 +1,17 @@
 package com.example.bibliotecaduoc.repository;
 
 import com.example.bibliotecaduoc.model.Libro;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Comparator;
-
 @Repository
-public class LibroRepository {
+public interface LibroRepository extends JpaRepository<Libro, Long> {
+    
 
-    //Arreglo que guarda todos los libros
-    private List<Libro> listaLibros = new ArrayList<>();
+}
 
-    public LibroRepository(){
-        listaLibros.add(new Libro(1, "9789569646638", "Fuego y Sangre", "Penguin Grupo Editorial", 2018, "George R. R. Martin"));
+
+      /*  listaLibros.add(new Libro(1, "9789569646638", "Fuego y Sangre", "Penguin Grupo Editorial", 2018, "George R. R. Martin"));
         listaLibros.add(new Libro(2, "9789563494150", "Quique Hache: El Mall Embrujado y Otras Historias", "Sm Ediciones", 2014, "Sergio Gomez"));
         listaLibros.add(new Libro(3, "9781484256251", "Spring Boot Persistence Best Practices", "Apress", 2020, "Anghel Leonard"));
         listaLibros.add(new Libro(4, "9789566075752", "Harry Potter y la piedra filosofal", "Salamandra", 2024, "J. K. Rowling"));
@@ -23,125 +20,4 @@ public class LibroRepository {
         listaLibros.add(new Libro(7, "9780321127426", "Effective Java", "Addison- Wesley", 2008, "Joshua Bloch"));
         listaLibros.add(new Libro(8, "9780134685991", "Clean Architecture", "Prentice Hall", 2018, "Robert C. Martin"));
         listaLibros.add(new Libro(9, "9780201633610", "Design Patterns", "Addison- Wesley", 1994, "Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides"));
-        listaLibros.add(new Libro(10, "9780132350884", "Clean Code", "Prentice Hall", 2008, "Robert C. Martin"));
-    }
-
-    //Metodo que retorna todos los libros
-    public List<Libro> obtenerLibros(){
-        return listaLibros;
-    }
-
-    //Buscar libro por id
-    public Libro buscarPorId(int id) {
-        for (Libro libro : listaLibros){
-            if (libro.getId() == id){
-                return libro;
-            }
-        }
-        return null;
-    }
-    //Buscar libro por isbn
-    public Libro buscarPorIsbn(String isbn){
-        for (Libro libro : listaLibros){
-            if (libro.getIsbn().equals(isbn)){
-                return libro;
-            }
-        }
-        return null;
-    }
-    //Buscar autor
-    public List<Libro> buscarPorAutor(String autor){
-        List<Libro> resultado = new ArrayList<>();
-        for (Libro libro : listaLibros){
-            if (libro.getAutor().equals(autor)){
-                resultado.add(libro);
-            }
-        }
-        return resultado;
-    }
-    //buscar por año
-    public List<Libro> buscarPorPubli(int publi) {
-        List<Libro> resultado = new ArrayList<>();
-        for (Libro libro : listaLibros){
-            if (libro.getFechaPublicacion() == publi){
-                resultado.add(libro);
-            }
-        }
-        return resultado;
-    }
-    //Fecha mas antiguo
-    public Libro buscarMasOld(){
-        return listaLibros.stream().min(Comparator.comparing(Libro:: getFechaPublicacion)).orElse(null); 
-    }
-    //buscar mas nuevo
-    public Libro buscarMasNew(){
-        return listaLibros.stream().max(Comparator.comparing(Libro::getFechaPublicacion)).orElse(null);
-    }
-
-    public Libro guardar(Libro lib){
-        listaLibros.add(lib);
-        return lib;
-    }
-
-    public Libro actualizar(Libro lib){
-        int id = 0;
-        int idPosicion = 0;
-
-        for (int i = 0; i < listaLibros.size(); i++){
-            if(listaLibros.get(i).getId() == lib.getId()){
-                id = lib.getId();
-                idPosicion = i;
-            }
-        }
-
-        Libro libro1 = new Libro();
-        libro1.setId(id);
-        libro1.setTitulo(lib.getTitulo());
-        libro1.setAutor(lib.getAutor());
-        libro1.setFechaPublicacion(lib.getFechaPublicacion());
-        libro1.setEditorial(lib.getEditorial());
-        libro1.setIsbn(lib.getIsbn());
-
-        listaLibros.set(idPosicion, libro1);
-        return libro1;
-    }
-
-    public void eliminar(int id){
-        //1 metodo
-        Libro libro = buscarPorId(id);
-        if (libro != null) {
-            listaLibros.remove(libro);
-        }
-
-        //2 metodo
-        int idPosicion = 0;
-        for (int i = 0; i < listaLibros.size(); i++){
-            if (listaLibros.get(i).getId() == id){
-                idPosicion = i;
-                break;
-            }
-        }
-        if (idPosicion > 0){
-            listaLibros.remove(idPosicion);
-        }
-        //3 metodo
-        listaLibros.removeIf(x -> x.getId() == id);
-    }
-
-    public int totaLibros(){
-        return listaLibros.size();
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-}
+        listaLibros.add(new Libro(10, "9780132350884", "Clean Code", "Prentice Hall", 2008, "Robert C. Martin")); */

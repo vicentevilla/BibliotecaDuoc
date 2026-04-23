@@ -1,76 +1,79 @@
 package com.example.bibliotecaduoc.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.http.HttpStatus;
+
 import com.example.bibliotecaduoc.model.Libro;
 import com.example.bibliotecaduoc.services.LibroService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
-
-
-
-//ejemplo
-
-
-@Service
 @RestController
 @RequestMapping("/api/v1/libros")
 public class LibroController {
-
     @Autowired
     private LibroService libroService;
 
     @GetMapping
-    public List<Libro> listaLibros(){
-        return libroService.getLibros();
+    public ResponseEntity<List<Libro>> listar(){
+        List<Libro> libro = libroService.finAll();
+        if (libro.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(libro);
     }
 
     @PostMapping
-    public Libro agregaLibro(@RequestBody Libro libro) {
-        return libroService.saveLibro(libro);
-    }
-    
-    @GetMapping("{id}")
-    public Libro buscaLibro(@PathVariable int id) {
-        return libroService.getLibroId(id);
-    }
-    
-    @PutMapping("{id}")
-    public Libro actualizarLibro(@PathVariable int id, @RequestBody Libro libro){
-        return libroService.updateLibro(libro);
+    public ResponseEntity<Libro> guardar(@RequestBody Libro libro){
+        Libro libroNuevo = libroService.save(libro);
+        return ResponseEntity.status(HttpStatus.CREATED).body(libroNuevo);
     }
 
-    @DeleteMapping("{id}")
-    public String eliminarLibro(@PathVariable int id){
-        return libroService.deleteLibro(id);
+    @GetMapping("/{id}")
+    public ResponseEntity<Libro> buscar(@PathVariable Integer id){
+        try {
+            Libro libro = libroService.findById(id);
+            return ResponseEntity.ok(libro);
+        } catch (Exception e){
+            return ResponseEntity.notFound().build();
+        }
     }
-    @GetMapping("/total")
-    public int totaLibrosV2(){
-        return libroService.totaLibrosV2();
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Libro> actualizar(@PathVariable Integer id, @RequestBody Libro libro){
+        try {
+            Libro lic = libroService.findById(id);
+            lic.setId(id);
+            lic.setIsbn(libro.getIsbn());
+            lic.setTitulo(libro.getTitulo());
+            lic.setEditorial(libro.getEditorial());
+            lic.setFechaPublicacion(libro.getFechaPublicacion());
+            lic.setAutor(libro.getAutor());
+
+            libroService.save(lic);
+            return ResponseEntity.ok(libro);
+        } catch (Exception e){
+            return ResponseEntity.notFound().build();
+        }
     }
-    @GetMapping("/isbn/{isbn}")
-    public Libro buscaIsbn(@PathVariable String isbn) {
-        return libroService.getLibroIsbn(isbn);
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> eliminar(@PathVariable Long id){
+        try {
+            libroService.delete(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e){
+            return ResponseEntity.notFound().build();
+        }
     }
-    @GetMapping("/autor/{autor}")
-    public List<Libro> buscaAutor(@PathVariable String autor){
-        return libroService.getLibroAutor(autor);
-    }
-    @GetMapping("/publi/{publi}")
-    public List<Libro> buscaPubli(@PathVariable int publi){
-        return libroService.getLibroPubli(publi);
-    }
-    @GetMapping("/old")
-    public Libro getLibroOld(){
-        return libroService.getLibroOld();
-    }
-    @GetMapping("/new")
-    public Libro getLibroNew(){
-        return libroService.getLibroNew();
-    } 
-} 
-//https://github.com/vicentevilla/BibliotecaDuoc.git
+}
